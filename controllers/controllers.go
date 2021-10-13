@@ -1,6 +1,6 @@
 package controllers
 
 func InitControllers() {
-	LoadModelToMemoryJson(&settings, &users, &logins)
+	loadModelToMemoryJson(&settings, &users, &logins)
 	initApi()
 }

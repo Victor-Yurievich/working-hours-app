@@ -1,6 +1,6 @@
 package main
 
-import "./controllers"
+import "github.com/Victor-Yurievich/working-hours-app/controllers"
 
 func main() {
 	controllers.InitControllers()

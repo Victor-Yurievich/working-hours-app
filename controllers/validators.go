@@ -14,7 +14,7 @@ func validateLoginHour(loginHour int) bool {
 func validateLoginAttempt(username, password string) bool {
 	for _, user := range users {
 		fmt.Println(user)
-		if validateUser(username, password, user){
+		if validateUser(username, password, user) {
 			return true
 		}
 	}

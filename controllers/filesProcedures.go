@@ -21,21 +21,21 @@ type User struct {
 }
 
 type Login struct {
-	LoginId   int `json:"login_id"`
-	Username  string `json:"username"`
-	UserEmail string `json:"user_email"`
-	Ip        string `json:"ip"`
-	UserRole  string `json:"user_role"`
-	LoginDate string   `json:"login_date"`
-	LoginHour int    `json:"login_hour"`
-	ValidLoginHour bool `json:"valid_login_hour"`
+	LoginId        int    `json:"login_id"`
+	Username       string `json:"username"`
+	UserEmail      string `json:"user_email"`
+	Ip             string `json:"ip"`
+	UserRole       string `json:"user_role"`
+	LoginDate      string `json:"login_date"`
+	LoginHour      int    `json:"login_hour"`
+	ValidLoginHour bool   `json:"valid_login_hour"`
 }
 
 var settings = Settings{}
 var users = []User{}
 var logins = []Login{}
 
-func LoadModelToMemoryJson(settings *Settings, users *[]User, logins *[]Login) {
+func loadModelToMemoryJson(settings *Settings, users *[]User, logins *[]Login) {
 	loadSettings(settings)
 	loadUsers(users)
 	loadLogins(logins)

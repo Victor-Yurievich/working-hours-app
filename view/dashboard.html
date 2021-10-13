@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <title>dashboard</title>
     <style>
         .container {
@@ -14,28 +14,35 @@
             top: 5em;
             left: 5em;
         }
+
         .flex-div {
             display: flex;
         }
+
         label {
             margin-right: 0.5em;
         }
+
         input {
             width: 5em;
             margin-right: 0.5em;
         }
+
         .logout-div {
             padding-left: 7em;
         }
+
         a {
             color: black;
             text-decoration: none;
         }
+
         a:hover {
             color: blue;
             text-decoration: none;
             cursor: pointer;
         }
+
         .dashboard-div {
             position: relative;
             bottom: 2em;
@@ -55,9 +62,9 @@
     <form action="/settings/" method="POST">
         <div class="flex-div">
             <label for="from">From</label>
-            <input type="number" id="from" name="from" min="0" max="23" value="{{.From}}">
+            <input id="from" max="23" min="0" name="from" type="number" value="{{.From}}">
             <label for="to">To</label>
-            <input type="number" id="to" name="to" min="0" max="23" value="{{.To}}">
+            <input id="to" max="23" min="0" name="to" type="number" value="{{.To}}">
             <input type="submit" value="Save">
         </div>
     </form>

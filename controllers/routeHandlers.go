@@ -10,7 +10,6 @@ import (
 var validPath = regexp.MustCompile("^/(login|auth|dashboard|settings)/$")
 var templates = template.Must(template.ParseFiles("./view/login.html", "./view/dashboard.html"))
 
-
 func handler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/login", http.StatusFound)
 }
@@ -64,8 +63,3 @@ func settingsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	http.Redirect(w, r, "/dashboard/", http.StatusFound)
 }
-
-
-
-
-

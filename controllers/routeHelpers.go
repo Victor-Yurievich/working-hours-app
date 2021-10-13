@@ -76,18 +76,18 @@ func getLoginAttempt(username string, r *http.Request) Login {
 	user := getUserByUsername(username)
 	loginHour := time.Now().Hour()
 	return Login{
-		LoginId: rand.Intn(1000000),
-		Username: user.Username,
-		UserEmail: user.Email,
-		Ip: getIP(r),
-		UserRole: user.Role,
-		LoginDate: time.Now().Format("2006-01-02 15:04:05"),
-		LoginHour: loginHour,
+		LoginId:        rand.Intn(1000000),
+		Username:       user.Username,
+		UserEmail:      user.Email,
+		Ip:             getIP(r),
+		UserRole:       user.Role,
+		LoginDate:      time.Now().Format("2006-01-02 15:04:05"),
+		LoginHour:      loginHour,
 		ValidLoginHour: validateLoginHour(loginHour),
 	}
 }
 
-func getUserByUsername(username string) User{
+func getUserByUsername(username string) User {
 	var retutnUser User
 	for _, user := range users {
 		fmt.Println(user)
@@ -130,14 +130,14 @@ func getIP(r *http.Request) string {
 
 func setAuthCookie(w http.ResponseWriter) http.ResponseWriter {
 	expiration := time.Now().Add(365 * 24 * time.Hour)
-	cookie := http.Cookie{Name: "token", Value: "authenticated", Expires:expiration, HttpOnly: true}
+	cookie := http.Cookie{Name: "token", Value: "authenticated", Expires: expiration, HttpOnly: true}
 	http.SetCookie(w, &cookie)
 	return w
 }
 
 func deleteAuthCookie(w http.ResponseWriter) http.ResponseWriter {
 	expiration := time.Unix(0, 0)
-	cookie := http.Cookie{Name: "token", Value: "", Expires:expiration, HttpOnly: true}
+	cookie := http.Cookie{Name: "token", Value: "", Expires: expiration, HttpOnly: true}
 	http.SetCookie(w, &cookie)
 	return w
 }

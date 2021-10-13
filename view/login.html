@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <title>Login</title>
     <style>
         .container {
@@ -14,6 +14,7 @@
             top: 5em;
             left: 5em;
         }
+
         label {
             margin-right: 0.5em;
             margin-bottom: 0.5em;
@@ -23,9 +24,11 @@
             margin-right: 0.5em;
             margin-bottom: 0.5em;
         }
+
         form {
             display: flex;
         }
+
         .submit {
             margin-top: 1.1em;
         }
@@ -38,11 +41,11 @@
     <form action="/auth/" method="POST">
         <div>
             <label for="username">Username</label><br>
-            <input type="text" name="username" id="username">
+            <input id="username" name="username" type="text">
         </div>
         <div>
             <label for="password">Password</label><br>
-            <input type="password" name="password" id="password" required>
+            <input id="password" name="password" required type="password">
         </div>
         <div class="submit"><input type="submit" value="Sign in"></div>
     </form>

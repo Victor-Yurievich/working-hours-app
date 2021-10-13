@@ -14,6 +14,3 @@ func initApi() {
 	http.HandleFunc("/ws/", wsEndpoint)
 	log.Fatal(http.ListenAndServe(":8088", nil))
 }
-
-
-
