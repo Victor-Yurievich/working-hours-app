@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Login</title>
+    <style>
+        .container {
+            width: 370px;
+            border: 1px solid;
+            padding: 0 3em 3em;
+            position: relative;
+            top: 5em;
+            left: 5em;
+        }
+        label {
+            margin-right: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        input {
+            margin-right: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        form {
+            display: flex;
+        }
+        .submit {
+            margin-top: 1.1em;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Login</h1>
+
+    <form action="/auth/" method="POST">
+        <div>
+            <label for="username">Username</label><br>
+            <input type="text" name="username" id="username">
+        </div>
+        <div>
+            <label for="password">Password</label><br>
+            <input type="password" name="password" id="password" required>
+        </div>
+        <div class="submit"><input type="submit" value="Sign in"></div>
+    </form>
+</div>
+</body>
+</html>

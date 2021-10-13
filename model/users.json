@@ -1,0 +1,31 @@
+[
+    {
+      "id": "001",
+      "username": "user1",
+      "password": "111",
+      "email": "user1@gmail.com",
+      "role": "admin",
+      "blocked": false
+    },{
+      "id": "002",
+      "username": "user2",
+      "password": "222",
+      "email": "user2@gmail.com",
+      "role": "manager",
+      "blocked": true
+    },{
+      "id": "003",
+      "username": "user3",
+      "password": "333",
+      "email": "user3@gmail.com",
+      "role": "employee",
+      "blocked": false
+    },{
+      "id": "004",
+      "username": "user4",
+      "password": "444",
+      "email": "user4@gmail.com",
+      "role": "employee",
+      "blocked": false
+    }
+]
