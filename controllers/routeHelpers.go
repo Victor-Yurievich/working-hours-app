@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"math/rand"
@@ -54,7 +55,6 @@ func parseSettingsRequestForm(r *http.Request) (from int, to int) {
 		if key == "to" {
 			to = populateKey(from, value[0])
 		}
-		fmt.Printf("%s = %s\n", key, value)
 	}
 	return from, to
 }
@@ -130,14 +130,32 @@ func getIP(r *http.Request) string {
 
 func setAuthCookie(w http.ResponseWriter) http.ResponseWriter {
 	expiration := time.Now().Add(365 * 24 * time.Hour)
-	cookie := http.Cookie{Name: "token", Value: "authenticated", Expires: expiration, HttpOnly: true}
+	cookie := http.Cookie{Name: "token", Value: "authenticated", Expires: expiration, HttpOnly: true, Path: "/dashboard"}
 	http.SetCookie(w, &cookie)
 	return w
 }
 
 func deleteAuthCookie(w http.ResponseWriter) http.ResponseWriter {
 	expiration := time.Unix(0, 0)
-	cookie := http.Cookie{Name: "token", Value: "", Expires: expiration, HttpOnly: true}
+	cookie := http.Cookie{Name: "token", Value: "", Expires: expiration, HttpOnly: true, Path: "/dashboard"}
 	http.SetCookie(w, &cookie)
 	return w
+}
+
+func createPongJsonResponce() []byte {
+	response := make(map[string]bool)
+	response["is_alive"] = true
+	return createJson(response)
+}
+
+func createIncidentsResponse() []byte {
+	return createJson(logins)
+}
+
+func createJson(data interface{}) []byte { // Ask Lior about using interface{}
+	jsonData, err := json.Marshal(data)
+	if err != nil {
+		log.Fatalf("Error happened in JSON marshal. Err: %s", err)
+	}
+	return jsonData
 }

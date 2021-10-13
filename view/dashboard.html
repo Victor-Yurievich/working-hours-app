@@ -7,7 +7,7 @@
     <title>dashboard</title>
     <style>
         .container {
-            width: 29%;
+            width: 530px;
             border: 1px solid;
             padding: 3em;
             position: relative;
@@ -56,10 +56,10 @@
             <h1>Dashboard working Hours</h1>
         </div>
         <div class="logout-div">
-            <a href="/login">Logout</a>
+            <a href="/logout">Logout</a>
         </div>
     </div>
-    <form action="/settings/" method="POST">
+    <form action="/settings" method="POST">
         <div class="flex-div">
             <label for="from">From</label>
             <input id="from" max="23" min="0" name="from" type="number" value="{{.From}}">
@@ -88,14 +88,23 @@
             console.log("Socket error - ", error)
             reconnectSocket(socket)
         }
-        socket.onmessage = (msg) => {
-            console.log(msg);
-        }
+        socket.onmessage = processMessage
     }
 
     function reconnectSocket(socket) {
         socket = null;
         socket = new WebSocket("ws://localhost:8088/ws");
+    }
+
+    function processMessage(msg) {
+        console.log(msg)
+        if (msg.data === "/logout") {
+            logUserOut();
+        }
+    }
+
+    function logUserOut() {
+        window.location.href = window.location.origin + "/logout"
     }
 </script>
 </body>

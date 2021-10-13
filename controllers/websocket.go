@@ -11,15 +11,18 @@ var upgrader = websocket.Upgrader{
 	WriteBufferSize: 1024,
 }
 
+var WS *websocket.Conn // Ask Lior about scopes
+
 func wsEndpoint(w http.ResponseWriter, r *http.Request) {
 	upgrader.CheckOrigin = func(r *http.Request) bool { return true }
-	ws, err := upgrader.Upgrade(w, r, nil)
+	conn, err := upgrader.Upgrade(w, r, nil)
+	WS = conn
 	if err != nil {
 		log.Println(err)
 		return
 	}
 	log.Println("Client successfully connected...")
-	reader(ws)
+	reader(WS)
 }
 
 func reader(conn *websocket.Conn) {
@@ -35,5 +38,12 @@ func reader(conn *websocket.Conn) {
 			log.Println(err)
 			return
 		}
+	}
+}
+
+func logUserOut(w http.ResponseWriter, r *http.Request) {
+	if err := WS.WriteMessage(1, []byte("/logout")); err != nil {
+		log.Println(err)
+		return
 	}
 }
