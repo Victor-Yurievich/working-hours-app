@@ -41,7 +41,10 @@ func reader(conn *websocket.Conn) {
 	}
 }
 
-func logUserOut(w http.ResponseWriter, r *http.Request) {
+func logUserOut() {
+	if WS == nil {
+		return
+	}
 	if err := WS.WriteMessage(1, []byte("/logout")); err != nil {
 		log.Println(err)
 		return

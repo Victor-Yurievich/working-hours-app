@@ -13,7 +13,7 @@ func initApi() {
 	http.HandleFunc("/dashboard", makeHandler(authHandler))
 	http.HandleFunc("/settings", makeHandler(settingsHandler))
 	http.HandleFunc("/ws", makeHandler(wsEndpoint))
-	http.HandleFunc("/log-user-out", makeHandler(logUserOut))
+	http.HandleFunc("/block-user", makeHandler(blockUserHandler))
 	http.HandleFunc("/ping", makeHandler(pongResponse))
 	http.HandleFunc("/fetch-incidents", makeHandler(incidentsResponse))
 	log.Fatal(http.ListenAndServe(":8088", nil))

@@ -50,7 +50,7 @@ func loadFile(name string, extension string) ([]byte, error) {
 	return file, nil
 }
 
-func loadSettings(settings *Settings) {
+func loadSettings(settings *Settings) { // Ask Lior about generic typing
 	loadedFile, err := loadFile("settings", "json")
 	if err != nil {
 		log.Fatal(err)
@@ -90,4 +90,24 @@ func saveSettings(settings *Settings) error {
 		log.Fatal(err)
 	}
 	return ioutil.WriteFile(filename, settingsJson, 0600)
+}
+
+func updateUsers(userToBlock UserToBlock) {
+	for i, user := range users {
+		if user.Username == userToBlock.Username {
+			user.Blocked = true
+			users[i] = user
+			saveUsers()
+			return
+		}
+	}
+}
+
+func saveUsers() error {
+	filename := "./model/users.json"
+	usersJson, err := json.Marshal(users)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return ioutil.WriteFile(filename, usersJson, 0600)
 }

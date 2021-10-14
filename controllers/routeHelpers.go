@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
-	"fmt"
+	"errors"
 	"log"
 	"math/rand"
 	"net"
@@ -12,9 +12,8 @@ import (
 	"time"
 )
 
-type Page struct {
-	Title string
-	Body  []byte
+type UserToBlock struct {
+	Username string `json:"username"`
 }
 
 func init() {
@@ -45,31 +44,24 @@ func parseLoginRequestForm(r *http.Request) (username string, password string) {
 	return username, password
 }
 
-func parseSettingsRequestForm(r *http.Request) (from int, to int) {
+func parseSettingsRequestForm(r *http.Request, w http.ResponseWriter) (from int, to int) {
 	r.ParseForm()
-	fmt.Println(r.Form)
 	for key, value := range r.Form {
 		if key == "from" {
-			from = populateKey(from, value[0])
+			from = populateKey(from, value[0], w)
 		}
 		if key == "to" {
-			to = populateKey(from, value[0])
+			to = populateKey(from, value[0], w)
 		}
 	}
 	return from, to
 }
 
-func populateKey(key int, value string) int {
+func populateKey(key int, value string, w http.ResponseWriter) int {
 	i, err := strconv.Atoi(value)
-	handleParsingError(err)
+	handleDecodingError(err, w)
 	key = i
 	return key
-}
-
-func handleParsingError(err error) {
-	if err != nil {
-		log.Fatal(err)
-	}
 }
 
 func getLoginAttempt(username string, r *http.Request) Login {
@@ -90,7 +82,6 @@ func getLoginAttempt(username string, r *http.Request) Login {
 func getUserByUsername(username string) User {
 	var retutnUser User
 	for _, user := range users {
-		fmt.Println(user)
 		if username == user.Username {
 			retutnUser = user
 		}
@@ -158,4 +149,29 @@ func createJson(data interface{}) []byte { // Ask Lior about using interface{}
 		log.Fatalf("Error happened in JSON marshal. Err: %s", err)
 	}
 	return jsonData
+}
+
+func decodeUserRequestBody(r *http.Request, structObject *UserToBlock) error {
+	decoder := json.NewDecoder(r.Body)
+	decoder.DisallowUnknownFields()
+	err := decoder.Decode(&structObject)
+	return err
+}
+
+func handleDecodingError(err error, w http.ResponseWriter) {
+	var unmarshalErr *json.UnmarshalTypeError
+	if errors.As(err, &unmarshalErr) {
+		errorResponse(w, "Bad Request. Wrong Type provided for field "+unmarshalErr.Field, http.StatusBadRequest)
+		return
+	}
+	errorResponse(w, "Bad Request "+err.Error(), http.StatusBadRequest)
+}
+
+func errorResponse(w http.ResponseWriter, message string, httpStatusCode int) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(httpStatusCode)
+	response := make(map[string]string)
+	response["message"] = message
+	jsonResponse, _ := json.Marshal(response)
+	w.Write(jsonResponse)
 }

@@ -1,14 +1,13 @@
 package controllers
 
 import (
-	"fmt"
 	"html/template"
 	"net/http"
 	"regexp"
 	"strings"
 )
 
-var validPath = regexp.MustCompile("^/(login|auth|dashboard|settings|logout|ws|log-user-out|ping|fetch-incidents)$")
+var validPath = regexp.MustCompile("^/(login|auth|dashboard|settings|logout|ws|block-user|ping|fetch-incidents)$")
 var templates = template.Must(template.ParseFiles("./view/login.html", "./view/dashboard.html"))
 
 func handler(w http.ResponseWriter, r *http.Request) {
@@ -44,7 +43,6 @@ func loginAuthHandler(w http.ResponseWriter, r *http.Request) {
 
 func authHandler(w http.ResponseWriter, r *http.Request) {
 	cookies := r.Cookies()
-	fmt.Println(cookies)
 	for _, cookie := range cookies {
 		if strings.Contains(cookie.Name, "token") {
 			dashboardHandler(w)
@@ -60,7 +58,7 @@ func dashboardHandler(w http.ResponseWriter) {
 }
 
 func settingsHandler(w http.ResponseWriter, r *http.Request) {
-	from, to := parseSettingsRequestForm(r)
+	from, to := parseSettingsRequestForm(r, w)
 	settings.From = from
 	settings.To = to
 	err := saveSettings(&settings)
@@ -83,4 +81,17 @@ func incidentsResponse(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusCreated)
 	incidentResponse := createIncidentsResponse()
 	w.Write(incidentResponse)
+}
+
+func blockUserHandler(w http.ResponseWriter, r *http.Request) {
+	var user UserToBlock
+	err := decodeUserRequestBody(r, &user) // Ask Lior how to do it Generic
+	if err != nil {
+		handleDecodingError(err, w)
+		return
+	}
+	updateUsers(user)
+	logUserOut()
+	errorResponse(w, "Success", http.StatusOK)
+	return
 }
