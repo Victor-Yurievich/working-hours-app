@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"log"
 	"net/http" //Ask Lior about Router
 )
@@ -16,5 +17,6 @@ func initApi() {
 	http.HandleFunc("/block-user", makeHandler(blockUserHandler))
 	http.HandleFunc("/ping", makeHandler(pongResponse))
 	http.HandleFunc("/fetch-incidents", makeHandler(incidentsResponse))
+	fmt.Println("Server is listening on the port 8088")
 	log.Fatal(http.ListenAndServe(":8088", nil))
 }

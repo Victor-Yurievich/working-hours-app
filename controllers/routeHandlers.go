@@ -77,9 +77,15 @@ func pongResponse(w http.ResponseWriter, r *http.Request) {
 }
 
 func incidentsResponse(w http.ResponseWriter, r *http.Request) {
+	var lastRun LastRun
+	err := decodeUserIncidentsBody(r, &lastRun)
+	if err != nil {
+		handleDecodingError(err, w)
+		return
+	}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
-	incidentResponse := createIncidentsResponse()
+	incidentResponse := createIncidentsResponse(lastRun)
 	w.Write(incidentResponse)
 }
 

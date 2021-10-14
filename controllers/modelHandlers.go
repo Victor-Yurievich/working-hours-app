@@ -21,7 +21,7 @@ type User struct {
 }
 
 type Login struct {
-	LoginId        int    `json:"login_id"`
+	LoginId        string `json:"login_id"`
 	Username       string `json:"username"`
 	UserEmail      string `json:"user_email"`
 	Ip             string `json:"ip"`

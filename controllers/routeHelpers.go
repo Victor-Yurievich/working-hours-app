@@ -3,6 +3,7 @@ package controllers
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"log"
 	"math/rand"
 	"net"
@@ -16,6 +17,10 @@ type UserToBlock struct {
 	Username string `json:"username"`
 }
 
+type LastRun struct {
+	Time string `json:"time"`
+}
+
 func init() {
 	rand.Seed(time.Now().UnixNano())
 }
@@ -27,6 +32,7 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request)) http.HandlerFunc {
 			http.NotFound(w, r)
 			return
 		}
+		fmt.Println("Calling " + r.URL.Path)
 		fn(w, r)
 	}
 }
@@ -48,35 +54,41 @@ func parseSettingsRequestForm(r *http.Request, w http.ResponseWriter) (from int,
 	r.ParseForm()
 	for key, value := range r.Form {
 		if key == "from" {
-			from = populateKey(from, value[0], w)
+			i, err := strconv.Atoi(value[0])
+			handleDecodingError(err, w)
+			from = i
 		}
 		if key == "to" {
-			to = populateKey(from, value[0], w)
+			i, err := strconv.Atoi(value[0])
+			handleDecodingError(err, w)
+			to = i
 		}
 	}
 	return from, to
 }
 
-func populateKey(key int, value string, w http.ResponseWriter) int {
-	i, err := strconv.Atoi(value)
-	handleDecodingError(err, w)
-	key = i
-	return key
-}
+//func populateKey(key int, value string, w http.ResponseWriter) int {
+//	i, err := strconv.Atoi(value)
+//	handleDecodingError(err, w)
+//	key = i
+//	return key
+//}
 
 func getLoginAttempt(username string, r *http.Request) Login {
 	user := getUserByUsername(username)
 	loginHour := time.Now().Hour()
-	return Login{
-		LoginId:        rand.Intn(1000000),
+
+	login := Login{
+		LoginId:        strconv.Itoa(rand.Intn(1000000)),
 		Username:       user.Username,
 		UserEmail:      user.Email,
 		Ip:             getIP(r),
 		UserRole:       user.Role,
-		LoginDate:      time.Now().Format("2006-01-02 15:04:05"),
+		LoginDate:      time.Now().Format("2006-01-02T15:04:05.000Z"),
 		LoginHour:      loginHour,
 		ValidLoginHour: validateLoginHour(loginHour),
 	}
+	return login
 }
 
 func getUserByUsername(username string) User {
@@ -139,8 +151,19 @@ func createPongJsonResponce() []byte {
 	return createJson(response)
 }
 
-func createIncidentsResponse() []byte {
-	return createJson(logins)
+func createIncidentsResponse(lastRun LastRun) []byte {
+	outOfWorkingHoursLogins := retrieveOutOfWorkingHoursLogins(logins, lastRun)
+	return createJson(outOfWorkingHoursLogins)
+}
+
+func retrieveOutOfWorkingHoursLogins(logins []Login, lastRun LastRun) []Login {
+	var loginsToRetrieve []Login
+	for _, login := range logins {
+		if validateLoginForIncidentResponse(login, lastRun) {
+			loginsToRetrieve = append(loginsToRetrieve, login)
+		}
+	}
+	return loginsToRetrieve
 }
 
 func createJson(data interface{}) []byte { // Ask Lior about using interface{}
@@ -158,7 +181,17 @@ func decodeUserRequestBody(r *http.Request, structObject *UserToBlock) error {
 	return err
 }
 
+func decodeUserIncidentsBody(r *http.Request, structObject *LastRun) error {
+	decoder := json.NewDecoder(r.Body)
+	//decoder.DisallowUnknownFields()
+	err := decoder.Decode(&structObject)
+	return err
+}
+
 func handleDecodingError(err error, w http.ResponseWriter) {
+	if err == nil {
+		return
+	}
 	var unmarshalErr *json.UnmarshalTypeError
 	if errors.As(err, &unmarshalErr) {
 		errorResponse(w, "Bad Request. Wrong Type provided for field "+unmarshalErr.Field, http.StatusBadRequest)
