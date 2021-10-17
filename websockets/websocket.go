@@ -1,4 +1,4 @@
-package controllers
+package websockets
 
 import (
 	"github.com/gorilla/websocket"
@@ -13,7 +13,7 @@ var upgrader = websocket.Upgrader{
 
 var WS *websocket.Conn // Ask Lior about scopes
 
-func wsEndpoint(w http.ResponseWriter, r *http.Request) {
+func WsEndpoint(w http.ResponseWriter, r *http.Request) {
 	upgrader.CheckOrigin = func(r *http.Request) bool { return true }
 	conn, err := upgrader.Upgrade(w, r, nil)
 	WS = conn
@@ -41,7 +41,7 @@ func reader(conn *websocket.Conn) {
 	}
 }
 
-func logUserOut() {
+func LogUserOut() {
 	if WS == nil {
 		return
 	}

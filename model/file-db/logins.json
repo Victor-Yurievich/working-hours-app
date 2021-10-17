@@ -1,0 +1,312 @@
+[
+  {
+    "login_id": "282666",
+    "username": "user4",
+    "user_email": "user4@gmail.com",
+    "ip": "::1",
+    "user_role": "employee",
+    "login_date": "2021-10-14T13:55:28.318Z",
+    "login_hour": 13,
+    "valid_login_hour": false
+  },
+  {
+    "login_id": "793381",
+    "username": "user1",
+    "user_email": "user1@gmail.com",
+    "ip": "::1",
+    "user_role": "admin",
+    "login_date": "2021-10-14T13:55:33.274Z",
+    "login_hour": 13,
+    "valid_login_hour": false
+  },
+  {
+    "login_id": "68936",
+    "username": "user1",
+    "user_email": "user1@gmail.com",
+    "ip": "::1",
+    "user_role": "admin",
+    "login_date": "2021-10-14T15:04:50.181Z",
+    "login_hour": 15,
+    "valid_login_hour": true
+  },
+  {
+    "login_id": "634338",
+    "username": "user1",
+    "user_email": "user1@gmail.com",
+    "ip": "::1",
+    "user_role": "admin",
+    "login_date": "2021-10-14T15:04:56.343Z",
+    "login_hour": 15,
+    "valid_login_hour": true
+  },
+  {
+    "login_id": "31655",
+    "username": "user1",
+    "user_email": "user1@gmail.com",
+    "ip": "::1",
+    "user_role": "admin",
+    "login_date": "2021-10-14T15:04:58.088Z",
+    "login_hour": 15,
+    "valid_login_hour": true
+  },
+  {
+    "login_id": "875669",
+    "username": "user1",
+    "user_email": "user1@gmail.com",
+    "ip": "::1",
+    "user_role": "admin",
+    "login_date": "2021-10-14T15:40:25.951Z",
+    "login_hour": 15,
+    "valid_login_hour": true
+  },
+  {
+    "login_id": "904246",
+    "username": "user2",
+    "user_email": "user2@gmail.com",
+    "ip": "::1",
+    "user_role": "manager",
+    "login_date": "2021-10-14T15:41:14.956Z",
+    "login_hour": 15,
+    "valid_login_hour": true
+  },
+  {
+    "login_id": "883243",
+    "username": "user2",
+    "user_email": "user2@gmail.com",
+    "ip": "::1",
+    "user_role": "manager",
+    "login_date": "2021-10-14T15:41:20.072Z",
+    "login_hour": 15,
+    "valid_login_hour": true
+  },
+  {
+    "login_id": "647162",
+    "username": "user2",
+    "user_email": "user2@gmail.com",
+    "ip": "::1",
+    "user_role": "manager",
+    "login_date": "2021-10-14T15:41:30.364Z",
+    "login_hour": 15,
+    "valid_login_hour": true
+  },
+  {
+    "login_id": "808030",
+    "username": "user3",
+    "user_email": "user3@gmail.com",
+    "ip": "::1",
+    "user_role": "employee",
+    "login_date": "2021-10-14T15:41:46.198Z",
+    "login_hour": 15,
+    "valid_login_hour": true
+  },
+  {
+    "login_id": "792800",
+    "username": "user3",
+    "user_email": "user3@gmail.com",
+    "ip": "::1",
+    "user_role": "employee",
+    "login_date": "2021-10-14T15:41:58.273Z",
+    "login_hour": 15,
+    "valid_login_hour": false
+  },
+  {
+    "login_id": "380279",
+    "username": "user1",
+    "user_email": "user1@gmail.com",
+    "ip": "::1",
+    "user_role": "admin",
+    "login_date": "2021-10-14T15:42:04.091Z",
+    "login_hour": 15,
+    "valid_login_hour": false
+  },
+  {
+    "login_id": "972754",
+    "username": "user2",
+    "user_email": "user2@gmail.com",
+    "ip": "::1",
+    "user_role": "manager",
+    "login_date": "2021-10-14T15:42:08.644Z",
+    "login_hour": 15,
+    "valid_login_hour": false
+  },
+  {
+    "login_id": "946997",
+    "username": "user3",
+    "user_email": "user3@gmail.com",
+    "ip": "::1",
+    "user_role": "employee",
+    "login_date": "2021-10-14T15:42:14.736Z",
+    "login_hour": 15,
+    "valid_login_hour": false
+  },
+  {
+    "login_id": "63991",
+    "username": "user4",
+    "user_email": "user4@gmail.com",
+    "ip": "::1",
+    "user_role": "employee",
+    "login_date": "2021-10-14T15:42:19.558Z",
+    "login_hour": 15,
+    "valid_login_hour": false
+  },
+  {
+    "login_id": "460374",
+    "username": "user1",
+    "user_email": "user1@gmail.com",
+    "ip": "::1",
+    "user_role": "admin",
+    "login_date": "2021-10-14T16:52:32.379Z",
+    "login_hour": 16,
+    "valid_login_hour": false
+  },
+  {
+    "login_id": "589711",
+    "username": "user1",
+    "user_email": "user1@gmail.com",
+    "ip": "::1",
+    "user_role": "admin",
+    "login_date": "2021-10-14T16:52:39.447Z",
+    "login_hour": 16,
+    "valid_login_hour": false
+  },
+  {
+    "login_id": "310883",
+    "username": "user1",
+    "user_email": "user1@gmail.com",
+    "ip": "::1",
+    "user_role": "admin",
+    "login_date": "2021-10-14T17:03:05.728Z",
+    "login_hour": 17,
+    "valid_login_hour": false
+  },
+  {
+    "login_id": "332702",
+    "username": "user1",
+    "user_email": "user1@gmail.com",
+    "ip": "::1",
+    "user_role": "admin",
+    "login_date": "2021-10-14T17:57:09.959Z",
+    "login_hour": 17,
+    "valid_login_hour": false
+  },
+  {
+    "login_id": "119651",
+    "username": "user1",
+    "user_email": "user1@gmail.com",
+    "ip": "::1",
+    "user_role": "admin",
+    "login_date": "2021-10-16T14:16:45.693Z",
+    "login_hour": 14,
+    "valid_login_hour": false
+  },
+  {
+    "login_id": "241942",
+    "username": "user1",
+    "user_email": "user1@gmail.com",
+    "ip": "::1",
+    "user_role": "admin",
+    "login_date": "2021-10-16T14:16:52.474Z",
+    "login_hour": 14,
+    "valid_login_hour": false
+  },
+  {
+    "login_id": "85894",
+    "username": "user1",
+    "user_email": "user1@gmail.com",
+    "ip": "::1",
+    "user_role": "admin",
+    "login_date": "2021-10-17T10:48:51.735Z",
+    "login_hour": 10,
+    "valid_login_hour": false
+  },
+  {
+    "login_id": "910218",
+    "username": "user1",
+    "user_email": "user1@gmail.com",
+    "ip": "::1",
+    "user_role": "admin",
+    "login_date": "2021-10-17T10:49:49.446Z",
+    "login_hour": 10,
+    "valid_login_hour": false
+  },
+  {
+    "login_id": "752206",
+    "username": "user1",
+    "user_email": "user1@gmail.com",
+    "ip": "::1",
+    "user_role": "admin",
+    "login_date": "2021-10-17T10:50:45.269Z",
+    "login_hour": 10,
+    "valid_login_hour": false
+  },
+  {
+    "login_id": "976815",
+    "username": "user1",
+    "user_email": "user1@gmail.com",
+    "ip": "::1",
+    "user_role": "admin",
+    "login_date": "2021-10-17T10:52:01.254Z",
+    "login_hour": 10,
+    "valid_login_hour": false
+  },
+  {
+    "login_id": "169891",
+    "username": "user1",
+    "user_email": "user1@gmail.com",
+    "ip": "::1",
+    "user_role": "admin",
+    "login_date": "2021-10-17T10:52:32.445Z",
+    "login_hour": 10,
+    "valid_login_hour": false
+  },
+  {
+    "login_id": "92936",
+    "username": "user1",
+    "user_email": "user1@gmail.com",
+    "ip": "::1",
+    "user_role": "admin",
+    "login_date": "2021-10-17T10:53:49.114Z",
+    "login_hour": 10,
+    "valid_login_hour": false
+  },
+  {
+    "login_id": "224778",
+    "username": "user1",
+    "user_email": "user1@gmail.com",
+    "ip": "::1",
+    "user_role": "admin",
+    "login_date": "2021-10-17T10:54:46.727Z",
+    "login_hour": 10,
+    "valid_login_hour": false
+  },
+  {
+    "login_id": "779525",
+    "username": "user1",
+    "user_email": "user1@gmail.com",
+    "ip": "::1",
+    "user_role": "admin",
+    "login_date": "2021-10-17T10:56:42.191Z",
+    "login_hour": 10,
+    "valid_login_hour": false
+  },
+  {
+    "login_id": "891278",
+    "username": "user1",
+    "user_email": "user1@gmail.com",
+    "ip": "::1",
+    "user_role": "admin",
+    "login_date": "2021-10-17T10:57:26.389Z",
+    "login_hour": 10,
+    "valid_login_hour": false
+  },
+  {
+    "login_id": "693034",
+    "username": "user1",
+    "user_email": "user1@gmail.com",
+    "ip": "::1",
+    "user_role": "admin",
+    "login_date": "2021-10-17T15:38:07.431Z",
+    "login_hour": 15,
+    "valid_login_hour": false
+  }
+]

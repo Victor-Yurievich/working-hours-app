@@ -1,4 +1,4 @@
-package controllers
+package model
 
 import (
 	"encoding/json"
@@ -31,18 +31,18 @@ type Login struct {
 	ValidLoginHour bool   `json:"valid_login_hour"`
 }
 
-var settings = Settings{}
-var users = []User{}
-var logins = []Login{}
+var TimeSettings = Settings{}
+var Users = []User{}
+var Logins = []Login{}
 
-func loadModelToMemoryJson(settings *Settings, users *[]User, logins *[]Login) {
-	loadSettings(settings)
+func LoadModelToMemoryJson(TimeSettings *Settings, users *[]User, logins *[]Login) {
+	loadSettings(TimeSettings)
 	loadUsers(users)
 	loadLogins(logins)
 }
 
 func loadFile(name string, extension string) ([]byte, error) {
-	filename := "./model/" + name + "." + extension
+	filename := "./model/file-db/" + name + "." + extension
 	file, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return nil, err
@@ -74,8 +74,8 @@ func loadLogins(logins *[]Login) {
 	json.Unmarshal(loadedFile, &logins)
 }
 
-func saveLogin(logins *[]Login) error {
-	filename := "./model/logins.json"
+func SaveLogin(logins *[]Login) error {
+	filename := "./model/file-db/logins.json"
 	loginsJson, err := json.Marshal(logins)
 	if err != nil {
 		log.Fatal(err)
@@ -83,8 +83,8 @@ func saveLogin(logins *[]Login) error {
 	return ioutil.WriteFile(filename, loginsJson, 0600)
 }
 
-func saveSettings(settings *Settings) error {
-	filename := "./model/settings.json"
+func SaveSettings(settings *Settings) error {
+	filename := "./model/file-db/settings.json"
 	settingsJson, err := json.Marshal(settings)
 	if err != nil {
 		log.Fatal(err)
@@ -92,22 +92,21 @@ func saveSettings(settings *Settings) error {
 	return ioutil.WriteFile(filename, settingsJson, 0600)
 }
 
-func updateUsers(userToBlock UserToBlock) {
-	for i, user := range users {
-		if user.Username == userToBlock.Username {
-			user.Blocked = true
-			users[i] = user
-			saveUsers()
-			return
-		}
-	}
-}
-
-func saveUsers() error {
-	filename := "./model/users.json"
-	usersJson, err := json.Marshal(users)
+func SaveUsers() error {
+	filename := "./model/file-db/users.json"
+	usersJson, err := json.Marshal(Users)
 	if err != nil {
 		log.Fatal(err)
 	}
 	return ioutil.WriteFile(filename, usersJson, 0600)
+}
+
+func GetUser(username string) User {
+	var userToReturn = User{}
+	for _, user := range Users {
+		if user.Username == username {
+			userToReturn = user
+		}
+	}
+	return userToReturn
 }

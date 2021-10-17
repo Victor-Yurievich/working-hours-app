@@ -1,6 +1,11 @@
-package controllers
+package api
 
 import (
+	"errors"
+	common_types "github.com/Victor-Yurievich/working-hours-app/common-types"
+	"github.com/Victor-Yurievich/working-hours-app/model"
+	"github.com/Victor-Yurievich/working-hours-app/validators"
+	"github.com/Victor-Yurievich/working-hours-app/websockets"
 	"html/template"
 	"net/http"
 	"regexp"
@@ -25,14 +30,14 @@ func logoutHandler(w http.ResponseWriter, r *http.Request) {
 
 func loginAuthHandler(w http.ResponseWriter, r *http.Request) {
 	username, password := parseLoginRequestForm(r)
-	validLogin := validateLoginAttempt(username, password)
+	validLogin := validators.ValidateLoginAttempt(username, password)
 	if validLogin != true {
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return
 	}
 	login := getLoginAttempt(username, r)
-	logins = append(logins, login)
-	err := saveLogin(&logins)
+	model.Logins = append(model.Logins, login)
+	err := model.SaveLogin(&model.Logins)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -54,14 +59,14 @@ func authHandler(w http.ResponseWriter, r *http.Request) {
 
 func dashboardHandler(w http.ResponseWriter) {
 	w = setAuthCookie(w)
-	renderTemplate(w, "dashboard", &settings)
+	renderTemplate(w, "dashboard", &model.TimeSettings)
 }
 
 func settingsHandler(w http.ResponseWriter, r *http.Request) {
 	from, to := parseSettingsRequestForm(r, w)
-	settings.From = from
-	settings.To = to
-	err := saveSettings(&settings)
+	model.TimeSettings.From = from
+	model.TimeSettings.To = to
+	err := model.SaveSettings(&model.TimeSettings)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -77,7 +82,7 @@ func pongResponse(w http.ResponseWriter, r *http.Request) {
 }
 
 func incidentsResponse(w http.ResponseWriter, r *http.Request) {
-	var lastRun LastRun
+	var lastRun common_types.LastRun
 	err := decodeUserIncidentsBody(r, &lastRun)
 	if err != nil {
 		handleDecodingError(err, w)
@@ -96,8 +101,34 @@ func blockUserHandler(w http.ResponseWriter, r *http.Request) {
 		handleDecodingError(err, w)
 		return
 	}
-	updateUsers(user)
-	logUserOut()
-	errorResponse(w, "Success", http.StatusOK)
-	return
+	handleUsersUpdate(w, user)
+}
+
+func handleUsersUpdate(w http.ResponseWriter, user UserToBlock) {
+	userUpdateError := UpdateUsers(user)
+	if userUpdateError != nil {
+		errorResponse(w, userUpdateError.Error(), http.StatusBadRequest)
+		return
+	}
+	processBlockUserResponse(w, user.Username)
+}
+
+func processBlockUserResponse(w http.ResponseWriter, username string) {
+	websockets.LogUserOut()
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	blockUserResponse := createBlockUserResponse(username)
+	w.Write(blockUserResponse)
+}
+
+func UpdateUsers(userToBlock UserToBlock) error {
+	for i, user := range model.Users {
+		if user.Username == userToBlock.Username {
+			user.Blocked = true
+			model.Users[i] = user
+			model.SaveUsers()
+			return nil
+		}
+	}
+	return errors.New("User " + userToBlock.Username + " not found")
 }

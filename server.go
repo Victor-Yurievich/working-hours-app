@@ -1,7 +1,11 @@
 package main
 
-import "github.com/Victor-Yurievich/working-hours-app/controllers"
+import (
+	"github.com/Victor-Yurievich/working-hours-app/api"
+	"github.com/Victor-Yurievich/working-hours-app/model"
+)
 
 func main() {
-	controllers.InitControllers()
+	model.LoadModelToMemoryJson(&model.TimeSettings, &model.Users, &model.Logins)
+	api.InitApi()
 }

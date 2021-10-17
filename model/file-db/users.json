@@ -5,7 +5,7 @@
     "password": "111",
     "email": "user1@gmail.com",
     "role": "admin",
-    "blocked": false
+    "blocked": true
   },
   {
     "id": "002",
